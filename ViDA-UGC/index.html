@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViDA-UGC - Research Paper</title>
+    <link rel="icon" href="../images/MIRAGE_logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Lato:wght@300;400;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <!-- 主标题区域 -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="title-animation">
+                <h1 class="main-title">
+                    <span class="title-word">ViDA-UGC</span>
+                </h1>
+                <h2 class="sub-title">
+                    Detailed Image Quality Analysis via Visual Distortion Assessment for UGC Images
+                </h2>
+                
+                <!-- 作者信息 -->
+                <div class="authors-list" id="authors">
+                    <a href="" class="author-link" target="_blank">
+                        Wenjie Liao
+                    </a><sup>1,2</sup>
+                    <span class="author-separator">,</span>
+                    <a href="" class="author-link" target="_blank">
+                        Jieyu Yuan
+                    </a><sup>1</sup>
+                    <span class="author-separator">,</span>
+                    <a href="" class="author-link" target="_blank">
+                        Yifang Xu
+                    </a><sup>2</sup>          
+                    <span class="author-separator">,</span>         
+                    <a href="https://mmcheng.net/clguo/" class="author-link" target="_blank">
+                        Chunle Guo
+                    </a><sup>1</sup>
+                    <span class="author-separator">,</span>
+                    <a href="" class="author-link" target="_blank">
+                        Zilong Zhang
+                    </a><sup>1</sup>                               
+                    <span class="author-separator">,</span>
+                    <a href="" class="author-link" target="_blank">
+                        Jihong Li
+                    </a><sup>1</sup>   
+                    <span class="author-separator">,</span>
+                    <a href="" class="author-link" target="_blank">
+                        Jiachen Fu   
+                    </a><sup>1</sup>   
+                     <span class="author-separator">,</span>
+                    <a href="" class="author-link" target="_blank">
+                        Haotian Fan<sup>†</sup>
+                    </a><sup>2</sup>
+                     <span class="author-separator">,</span>
+                    <a href="" class="author-link" target="_blank">
+                        Tao Li
+                    </a><sup>2</sup>
+                     <span class="author-separator">,</span>
+                    <a href="" class="author-link" target="_blank">
+                        Junhui Cui
+                    </a><sup>2</sup>
+                    <span class="author-separator">,</span>
+                    <a href="https://li-chongyi.github.io/" class="author-link" target="_blank">
+                        Chongyi Li<sup>*</sup>
+                    </a><sup>1</sup>
+                </div>
+                
+                <!-- Affiliations -->
+                <div class="is-size-5 publication-authors">
+                    <span class="author-block">
+                        <sup>1</sup> VCIP, CS, Nankai University&nbsp;&nbsp;
+                        <sup>2</sup> Bytedance Inc&nbsp;&nbsp;
+                    </span>
+                </div>
+                
+                <div class="author-notes">
+                    <p data-en="<sup>†</sup>Project Lead" data-zh="<sup>*</sup>通讯作者 &nbsp;&nbsp;&nbsp;&nbsp; <sup>†</sup>项目负责人"><sup>†</sup>Project Lead</p>
+                </div>
+                
+                <!-- <div class="subtitle">
+                    <p data-en="Revolutionary depth estimation technology for any environmental conditions" data-zh="突破性的深度估计技术，适应任何环境条件">Revolutionary depth estimation technology for any environmental conditions</p>
+                </div> -->
+            </div>
+
+            <!-- 交互按钮 -->
+            <div class="cta-buttons">
+                <button class="cta-btn primary" id="paper-btn">
+                    <i class="fas fa-file-pdf"></i>
+                    <span data-en="Paper" data-zh="阅读论文">Paper</span>
+                </button>
+                <button class="cta-btn arxiv" id="arxiv-btn">
+                    <img src="image/arxiv.png" alt="arXiv" class="btn-icon">
+                    <span data-en="arXiv" data-zh="arXiv">arXiv</span>
+                </button>
+                <button class="cta-btn secondary" id="code-btn">
+                    <i class="fab fa-github"></i>
+                    <span data-en="Code" data-zh="查看代码">Code</span>
+                </button>
+                <button class="cta-btn huggingface" id="hf-btn">
+                    <img src="image/huggingface_logo.svg" alt="Hugging Face" class="btn-icon">
+                    <span data-en="Dataset" data-zh="Dataset">Dataset</span>
+                </button>
+                <button class="cta-btn huggingface-model" id="model-btn">
+                    <img src="image/huggingface_logo.svg" alt="Hugging Face" class="btn-icon">
+                    <span data-en="Model" data-zh="模型">Model</span>
+                </button>
+            </div>
+            
+            <!-- Teaser 图片 -->
+            <div class="teaser-container scroll-target">
+                <img src="image/data.png" alt="ViDA-UGC Data Structure" class="teaser-image lazy-load" loading="lazy">
+                <div class="image-placeholder"></div>
+            </div>
+            
+            <div class="teaser-caption scroll-target delay-200" style="text-align: justify;">
+                <p data-en="An illustration of the ViDA-UGC data structure. This dataset focuses on 10 common UGC distortions and is split into three sub-datasets: 1) ViDA-Grounding for fine-grained distortion grounding. This sub-dataset is divided into three tasks: distortion grounding, referring grounding, and region perception. 2) ViDA-Perception for detailed low-level perception. The questions in this sub-dataset have two formats and five concerns, focusing more on distortions. 3) ViDA-Description for reasoning quality description. Besides overall quality analysis, we add a new task, individual distortion assessment, which requires the model to assess a specific distortion in detail."
+                   data-zh="ViDA-UGC 数据集结构图示。该数据集聚焦于 10 种常见的 UGC 退化，并分为三个子数据集：1) ViDA-Grounding 用于细粒度的退化定位。该子数据集分为三个任务：退化检测、指代定位和区域感知。2) ViDA-Perception 用于更细节的底层视觉感知。该子数据集中的问题有两种格式和五个关注点，更聚焦于退化。3) ViDA-Description 用于推理质量描述。除了整体质量分析，我们还增加了一个新任务，即单种退化评估，要求模型详细评估特定种类的退化。">
+                An illustration of the ViDA-UGC data structure. This dataset focuses on 10 common UGC distortions and is split into three sub-datasets: 1) ViDA-Grounding for fine-grained distortion grounding. This sub-dataset is divided into three tasks:                quality description. Besides overall quality analysis, we add a new task, individual distortion assessment, which requires the model to assess a specific distortion in detail. distortion grounding, referring grounding, and region perception. 2) ViDA-Perception for detailed low-level perception. The questions in this sub-dataset have two formats and five concerns, focusing more on distortions. 3) ViDA-Description for reasoning
+                </p>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-fingerprint"></i>
+                    <span class="logo-animated-text" style="white-space: nowrap;">ViDA-UGC</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="#abstract" class="nav-link" data-en="Abstract" data-zh="摘要">Abstract</a>
+                    <a href="#method" class="nav-link" data-en="Method" data-zh="方法">Method</a>
+                    <a href="#benchmark" class="nav-link" data-en="Benchmark" data-zh="基准">Benchmark</a>
+                    <a href="#comparison" class="nav-link" data-en="Comparison" data-zh="对比">Comparison</a>
+                    <!-- <a href="#data" class="nav-link" data-en="Data" data-zh="数据">Data</a> -->
+                    <!-- <a href="#authors" class="nav-link" data-en="Authors" data-zh="作者">Authors</a> -->
+                    <!-- <a href="#results" class="nav-link" data-en="Results" data-zh="结果">Results</a> -->
+                    <a href="#code" class="nav-link" data-en="Download" data-zh="下载">Download</a>
+                    <!-- <a href="#contact" class="nav-link" data-en="Contact" data-zh="联系">Contact</a> -->
+                    <!-- <a href="#license" class="nav-link" data-en="License" data-zh="许可证">License</a> -->
+                    <a href="#citation" class="nav-link" data-en="Citation" data-zh="引用">Citation</a>
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <span class="lang-separator">|</span>
+                        <button class="lang-btn" data-lang="zh">中文</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 滚动指示器 -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- 摘要部分 -->
+    <section class="abstract-section" id="abstract">
+        <div class="container scroll-target">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Abstract" data-zh="摘要">Abstract</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <!-- 详细摘要文本 -->
+            <div class="abstract-text-container">
+                <div class="abstract-paragraph">
+                    <p data-en="Recent advances in Multimodal Large Language Models (MLLMs) have introduced a paradigm shift for Image Quality Assessment (IQA) from unexplainable image quality scoring to explainable IQA, demonstrating practical applications like quality control and optimization guidance. However, current explainable IQA methods not only inadequately use the same distortion criteria to evaluate both User-Generated Content (UGC) and AI-Generated Content (AIGC) images, but also lack detailed quality analysis for monitoring image quality and guiding image restoration." 
+                       data-zh="多模态大型语言模型（MLLM）的最新进展为图像质量评估（IQA）带来了范式转变，从可解释性差的图像质量打分转向可解释的IQA，展示了在质量控制和优化指导等方面的实际应用。然而，当前的可解释IQA方法不仅在评估用户生成内容（UGC）和AI生成内容（AIGC）图像时使用相同的退化标准，而且缺乏详细的质量分析， 难以用于监控图像质量和指导图像修复的。">
+                       Recent advances in Multimodal Large Language Models (MLLMs) have introduced a paradigm shift for Image Quality Assessment (IQA) from unexplainable image quality scoring to explainable IQA, demonstrating practical applications like quality control and optimization guidance. However, current explainable IQA methods not only inadequately use the same distortion criteria to evaluate both User-Generated Content (UGC) and AI-Generated Content (AIGC) images, but also lack detailed quality analysis for monitoring image quality and guiding image restoration.
+                    </p>
+                    
+                    <p data-en="In this study, we establish the first large-scale <b>Vi</b>sual <b>D</b>istortion <b>A</b>ssessment Instruction Tuning Dataset for <b>UGC</b> images, termed <b>ViDA-UGC</b>, which comprises 11K images with fine-grained quality grounding, detailed quality perception, and reasoning quality description data. This dataset is constructed through a distortion-oriented pipeline, which involves human subject annotation and a Chain-of-Thought (CoT) assessment framework. This framework guides GPT-4o to generate quality descriptions by identifying and analyzing UGC distortions, which helps capturing rich low-level visual features that inherently correlate with distortion patterns. Moreover, we carefully select 476 images with corresponding 6,149 question answer pairs from ViDA-UGC and invite a professional team to ensure the accuracy and quality of GPT-generated information. The selected and revised data further contribute to the first UGC distortion assessment benchmark, termed <b>ViDA-UGC-Bench</b>." 
+                       data-zh="在本研究中，我们建立了首个大规模的视觉退化评估指令微调数据集，专用于UGC图像，命名为<b>ViDA-UGC</b>。该数据集包含11K张图像，涵盖了细粒度的质量定位、详细的质量感知和推理性的质量描述数据。该数据集通过一个面向退化的流程构建，包括人类主观标注和一个思维链（CoT）评估框架。该框架引导GPT-4o通过识别和分析UGC退化来生成质量描述，有助于捕捉与退化模式内在相关的丰富底层视觉特征。此外，我们从ViDA-UGC中精心挑选了476张图像及其对应的6149个问答对，并邀请专业画质团队确保GPT生成信息的准确性和质量，消减 GPT 的偏见。这些经过筛选和修订的数据进一步构成的首个UGC退化评估评测集，命名为<b>ViDA-UGC-Bench</b>。">
+                       In this study, we establish the first large-scale <b>Vi</b>sual <b>D</b>istortion <b>A</b>ssessment Instruction Tuning Dataset for <b>UGC</b> images, termed <b>ViDA-UGC</b>, which comprises 11K images with fine-grained quality grounding, detailed quality perception, and reasoning quality description data. This dataset is constructed through a distortion-oriented pipeline, which involves human subject annotation and a Chain-of-Thought (CoT) assessment framework. This framework guides GPT-4o to generate quality descriptions by identifying and analyzing UGC distortions, which helps capturing rich low-level visual features that inherently correlate with distortion patterns. Moreover, we carefully select 476 images with corresponding 6,149 question answer pairs from ViDA-UGC and invite a professional team to ensure the accuracy and quality of GPT-generated information. The selected and revised data further contribute to the first UGC distortion assessment benchmark, termed <b>ViDA-UGC-Bench</b>.
+                    </p>
+                    
+                    <p data-en="Experimental results demonstrate the effectiveness of the ViDA-UGC and CoT framework for consistently enhancing various image quality analysis abilities across multiple base MLLMs on ViDA-UGC-Bench and Q-Bench, even surpassing GPT-4o." 
+                       data-zh="实验结果表明，ViDA-UGC和CoT框架在ViDA-UGC-Bench和Q-Bench上能够一致增强多种MLLM的各种图像质量分析能力，其中一些模型甚至超越了GPT-4o。">
+                       Experimental results demonstrate the effectiveness of the ViDA-UGC and CoT framework for consistently enhancing various image quality analysis abilities across multiple base MLLMs on ViDA-UGC-Bench and Q-Bench, even surpassing GPT-4o.
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Method 部分 -->
+    <section class="method-section" id="method">
+        <div class="container scroll-target">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Data Construction" data-zh="数据构造">Data Construction</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="method-image-container">
+                <img src="image/cot_pipeline.png" alt="Chain-of-Thought Assessment Framework" class="method-image lazy-load" loading="lazy">
+                <div class="image-placeholder"></div>
+            </div>
+            
+            <div class="method-caption">
+                <p data-en="Overview of our CoT assessment framework. (a) Direct inference leads to inaccurate low-level information and superficial reasoning. (b) Standard CoT decomposes the task into reasoning steps but suffers from hallucination and inconsistent quality analysis. (c) Our approach integrates human expertise and ground-truth annotations to guide reliable step-wise reasoning and accurate quality prediction."
+                   data-zh="上图展示了我们的退化评估思维链（CoT）评估框架：(a) 直接推理会导致底层视觉信息不准确，且推理流于表面；(b) 标准思维链（CoT）虽将任务分解为推理步骤，但存在幻觉问题，且质量分析不一致；(c) 我们的方法整合人类专业知识与真实标注信息，能够指导可靠的分步推理并实现准确的质量预测。">
+                   Overview of our CoT assessment framework. (a) Direct inference leads to inaccurate low-level information and superficial reasoning. (b) Standard CoT decomposes the task into reasoning steps but suffers from hallucination and inconsistent quality analysis. (c) Our approach integrates human expertise and ground-truth annotations to guide reliable step-wise reasoning and accurate quality prediction.
+                </p>
+            </div>
+            
+            <div class="method-image-container">
+                <img src="image/annotation.png" alt="Annotation Pipeline" class="method-image lazy-load" loading="lazy">
+                <div class="image-placeholder"></div>
+            </div>
+            
+            <div class="method-caption">
+                <p data-en="An overview of the ViDA-UGC construction pipeline. This pipeline includes four steps: In (a), MILP sampling strategy ensures approximately uniform distribution for sampled images across low-level features. Human subjects further annotate distortion boxes and image quality scores. In (b), we mark each box with a number and integrate IQA expertise to GPT prompt. GPT-4o then outputs textual descriptions of distortions and their visual attributes. In (c), the generated textual descriptions, together with human annotations and IQA expertise, serve as ground truth information in the proposed CoT framework, which is exploited by GPT-4o to generate quality description data. In (d), the quality description data are transformed into distortion-related VQA and MCQ via GPT-4o. Moreover, the generated distortion attributes in (b) are converted into grounding data using pre-defined chat templates."
+                   data-zh="上图展示了ViDA-UGC 构建流程，该流程包含四个步骤：
+在 (a) 中，MILP 采样策略确保采样图像在底层视觉特征上呈近似均匀分布；随后，人类标注者进一步标注退化框和图像质量分数。
+在 (b) 中，我们为每个退化框标记编号，并将图像质量评估（IQA）专业知识整合到 GPT 提示中；GPT-4o 随后输出退化及其视觉属性的文本描述。
+在 (c) 中，生成的文本描述与人工标注、IQA 专业知识一起，作为所提出思维链（CoT）框架的参考信息，供 GPT-4o 生成质量描述数据。
+在 (d) 中，质量描述数据通过 GPT-4o 转换为退化相关的视觉问答（VQA）和多项选择题（MCQ）；此外，借助预定义的对话模板，我们将 (b) 中生成的退化属性转换为定位数据。">
+                An overview of the ViDA-UGC construction pipeline. This pipeline includes four steps: In (a), MILP sampling strategy ensures approximately uniform distribution for sampled images across low-level features. Human subjects further annotate distortion boxes and image quality scores. In (b), we mark each box with a number and integrate IQA expertise to GPT prompt. GPT-4o then outputs textual descriptions of distortions and their visual attributes. In (c), the generated textual descriptions, together with human annotations and IQA expertise, serve as ground truth information in the proposed CoT framework, which is exploited by GPT-4o to generate quality description data. In (d), the quality description data are transformed into distortion-related VQA and MCQ via GPT-4o. Moreover, the generated distortion attributes in (b) are converted into grounding data using pre-defined chat templates.                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benchmark 部分 -->
+    <section class="benchmark-section" id="benchmark">
+        <div class="container scroll-target">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Benchmark" data-zh="基准">Benchmark</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <div class="benchmark-image-container">
+                <img src="image/bench_intro.png" alt="MIRAGE Benchmark Workflow" class="benchmark-image lazy-load" loading="lazy">
+                <div class="image-placeholder"></div>
+            </div>
+            
+            <div class="benchmark-caption">
+                <p data-en=" To address the limitations of existing benchmarks, which often lack challenging questions and diversity in IQA tasks, we introduce <b>ViDA-UGC-Bench</b>, a first UGC distortion assessment benchmark. We carefully select 476 images with their distortion triplet samples, 476 overall quality analysis from ViDA-Description, 2,567 multi-choice questions from ViDA-Perception, and 3,106 grounding data from ViDA-Grounding. Based on the collected images and data, a professional team consisting of image-processing researchers is responsible for revising the question-answer pairs and ensuring the accuracy of low-level information, aiming to minimize GPT-4o biases. In the figure above, we present one excluded sample and several test questions retained in ViDA-UGC-Bench. The hence-constructed ViDA-UGC-Bench covers all ten UGC distortions and tests MLLMs from three core IQA tasks: distortion grounding, low-level perception, and quality description. " 
+                   data-zh="为解决现有基准常存在的挑战型问题缺失、图像质量评估（IQA）任务多样性不足的局限，我们推出 ViDA-UGC-Bench——首个面向用户生成内容（UGC）退化评估的基准。
+我们精心筛选了 476 幅图像及其退化三元组样本，同时纳入：
+ViDA-Description 部分的 476 条整体质量分析，
+ViDA-Perception 部分的 2567 道多项选择题，
+ViDA-Grounding 部分的 3106 条定位数据。
+基于收集的图像与数据，一支由图像处理研究者组成的专业团队负责修订问答对，并保障底层视觉信息的准确性，力求最小化GPT-4o 的偏差影响。在上图中，我们展示了一个被剔除的样本和几个保留在ViDA-UGC-Bench中的考题。
+由此构建的 ViDA-UGC-Bench 覆盖全部十种 UGC 退化类型，并从退化定位、底层感知、质量描述三大核心IQA任务维度，对多模态大语言模型（MLLMs） 进行测试。">
+                 To address the limitations of existing benchmarks, which often lack challenging questions and diversity in IQA tasks, we introduce <b>ViDA-UGC-Bench</b>, a first UGC distortion assessment benchmark. We carefully select 476 images with their distortion triplet samples, 476 overall quality analysis from ViDA-Description, 2,567 multi-choice questions from ViDA-Perception, and 3,106 grounding data from ViDA-Grounding. Based on the collected images and data, a professional team consisting of image-processing researchers is responsible for revising the question-answer pairs and ensuring the accuracy of low-level information, aiming to minimize GPT-4o biases. In the figure above, we present one excluded sample and several test questions retained in ViDA-UGC-Bench. The hence-constructed ViDA-UGC-Bench covers all ten UGC distortions and tests MLLMs from three core IQA tasks: distortion grounding, low-level perception, and quality description. 
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Coverage 部分 -->
+    <section class="data-coverage-section" id="comparison">
+        <div class="container scroll-target">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Performance Comparison" data-zh="性能对比">Comparison</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- Performance Comparison Table -->
+            <h3 style="text-align:center;margin:2rem 0 1rem 0;" data-en="Performance on the low-level perception ability" data-zh="底层视觉感知能力性能对比">Performance on the low-level perception ability</h3>
+            <div class="data-table-container">
+                <div class="table-wrapper" style="overflow-x:auto;">
+                    <!-- Performance Table -->
+                    <table class="data-table performance-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Model (variant)</th>
+                                <th rowspan="2">Training Dataset</th>
+                                <th colspan="3">Q-Bench</th>
+                                <th colspan="5">ViDA-UGC-Bench</th>
+                            </tr>
+                            <tr>
+                                <th>Dist</th>
+                                <th>I-C Dist</th>
+                                <th>Overall</th>
+                                <th>Type</th>
+                                <th>Position</th>
+                                <th>Severity</th>
+                                <th>Significance</th>
+                                <th>Overall</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="3">Qwen-VL-Chat</td>
+                                <td>no (Baseline)</td>
+                                <td>50.78%</td>
+                                <td>53.62%</td>
+                                <td>56.39%</td>
+                                <td>31.91%</td>
+                                <td>37.83%</td>
+                                <td>31.72%</td>
+                                <td>36.64%</td>
+                                <td>34.84%</td>
+                            </tr>
+                            <tr>
+                                <td>Q-Instruct</td>
+                                <td>70.43%</td>
+                                <td>74.34%</td>
+                                <td>71.51%</td>
+                                <td>28.50%</td>
+                                <td>35.79%</td>
+                                <td>31.72%</td>
+                                <td>47.12%</td>
+                                <td>35.88%</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td>ViDA-UGC</td>
+                                <td><strong>78.60%</strong></td>
+                                <td><strong>79.93%</strong></td>
+                                <td><strong>73.98%</strong></td>
+                                <td><strong>60.27%</strong></td>
+                                <td><strong>54.44%</strong></td>
+                                <td><strong>74.37%</strong></td>
+                                <td><strong>69.49%</strong></td>
+                                <td><strong>63.34%</strong></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">Qwen2-VL-7B</td>
+                                <td>no (Baseline)</td>
+                                <td>75.49%</td>
+                                <td>75.66%</td>
+                                <td>77.19%</td>
+                                <td>43.43%</td>
+                                <td>43.53%</td>
+                                <td>51.26%</td>
+                                <td>54.15%</td>
+                                <td>47.53%</td>
+                            </tr>
+                            <tr>
+                                <td>Q-Instruct</td>
+                                <td>75.68%</td>
+                                <td>77.63%</td>
+                                <td>76.92%</td>
+                                <td>34.12%</td>
+                                <td>42.00%</td>
+                                <td>51.47%</td>
+                                <td>52.08%</td>
+                                <td>44.14%</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td>ViDA-UGC</td>
+                                <td><strong>87.16%</strong></td>
+                                <td><strong>85.20%</strong></td>
+                                <td><strong>80.6%</strong></td>
+                                <td><strong>76.37%</strong></td>
+                                <td><strong>61.17%</strong></td>
+                                <td><strong>80.46%</strong></td>
+                                <td><strong>72.20%</strong></td>
+                                <td><strong>71.45%</strong></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">InternVL2.5-8B</td>
+                                <td>no (Baseline)</td>
+                                <td>69.07%</td>
+                                <td>70.07%</td>
+                                <td>73.98%</td>
+                                <td>37.08%</td>
+                                <td>43.78%</td>
+                                <td>44.96%</td>
+                                <td>49.04%</td>
+                                <td>43.51%</td>
+                            </tr>
+                            <tr>
+                                <td>Q-Instruct</td>
+                                <td>76.65%</td>
+                                <td>76.64%</td>
+                                <td>76.45%</td>
+                                <td>29.99%</td>
+                                <td>38.32%</td>
+                                <td>68.07%</td>
+                                <td>45.53%</td>
+                                <td>43.40%</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td>ViDA-UGC</td>
+                                <td><strong>87.74%</strong></td>
+                                <td><strong>84.54%</strong></td>
+                                <td><strong>79.33%</strong></td>
+                                <td><strong>81.24%</strong></td>
+                                <td><strong>62.06%</strong></td>
+                                <td><strong>82.14%</strong></td>
+                                <td><strong>78.27%</strong></td>
+                                <td><strong>74.80%</strong></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">InternVL3-8B</td>
+                                <td>no (Baseline)</td>
+                                <td>70.43%</td>
+                                <td>71.38%</td>
+                                <td>74.72%</td>
+                                <td>43.57%</td>
+                                <td>47.08%</td>
+                                <td>47.06%</td>
+                                <td>52.08%</td>
+                                <td>47.37%</td>
+                            </tr>
+                            <tr>
+                                <td>Q-Instruct</td>
+                                <td>70.43%</td>
+                                <td>75.99%</td>
+                                <td>73.18%</td>
+                                <td>29.10%</td>
+                                <td>34.90%</td>
+                                <td>53.15%</td>
+                                <td>47.28%</td>
+                                <td>39.77%</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td>ViDA-UGC</td>
+                                <td><strong>82.49%</strong></td>
+                                <td><strong>79.93%</strong></td>
+                                <td><strong>77.19%</strong></td>
+                                <td><strong>82.87%</strong></td>
+                                <td><strong>61.80%</strong></td>
+                                <td><strong>78.15%</strong></td>
+                                <td><strong>72.52%</strong></td>
+                                <td><strong>73.00%</strong></td>
+                            </tr>
+                            <tr>
+                                <td>GPT-4o-2024-11-20</td>
+                                <td>no (Zero-shot)</td>
+                                <td>75.14%</td>
+                                <td>78.10%</td>
+                                <td>78.60%</td>
+                                <td>46.38%</td>
+                                <td>60.28%</td>
+                                <td>53.57%</td>
+                                <td>59.58%</td>
+                                <td>55.20%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-caption" style="text-align: left; margin-top: 1rem;">
+                    <p data-en="Comparison of the low-level Perception ability between baseline MLLMs, Q-Instruct-tuned versions, and ViDA-UGC-tuned versions on both Q-Bench and ViDA-UGC-Bench. For each baseline model, ViDA-UGC-tuned version achieves the highest score in both benchmarks" data-zh="对比基线多模态大语言模型（MLLMs）、经 Q-Instruct 微调的版本，以及经 ViDA-UGC 微调的版本在 Q-Bench 和 ViDA-UGC-Bench 两个基准上的底层感知能力：对于每个基线模型，经 ViDA-UGC 微调的版本在两项基准测试中均取得了最高得分。">Comparison of the <strong>low-level Perception</strong> ability between baseline MLLMs, Q-Instruct-tuned versions, and ViDA-UGC-tuned versions on both Q-Bench and ViDA-UGC-Bench. For each baseline model, ViDA-UGC-tuned version achieves the highest score in both benchmarks. </p>
+                </div>
+            </div>
+
+            <!-- Quality Description Table -->
+            <div class="data-table-container">
+                <h3 style="text-align:center;margin:2rem 0 1rem 0;" data-en="Performance on the quality description ability" data-zh="质量描述能力性能对比">Performance on the quality description ability</h3>
+                <div class="table-wrapper" style="overflow-x:auto;">
+                    <table class="data-table performance-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2"><strong>Model</strong> <em>(variant)</em></th>
+                                <th rowspan="2">Training Dataset</th>
+                                <th colspan="4"><strong>Q-Bench</strong></th>
+                                <th colspan="4"><strong>ViDA-UGC-Bench</strong></th>
+                            </tr>
+                            <tr>
+                                <th><em>completeness</em></th>
+                                <th><em>precision</em></th>
+                                <th><em>relevance</em></th>
+                                <th><em>overall</em></th>
+                                <th><em>completeness</em></th>
+                                <th><em>precision</em></th>
+                                <th>reasoning</th>
+                                <th><em>overall</em></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="4">Qwen-VL-Chat</td>
+                                <td><em>no</em> (Baseline)*</td>
+                                <td>0.72</td>
+                                <td>0.53</td>
+                                <td>1.86</td>
+                                <td>3.11</td>
+                                <td>0.2</td>
+                                <td>0.58</td>
+                                <td>1.56</td>
+                                <td>2.34</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td><em>no</em> (Baseline)†</td>
+                                <td>0.78</td>
+                                <td>0.55</td>
+                                <td>1.99</td>
+                                <td>3.32</td>
+                                <td>0.5</td>
+                                <td>0.77</td>
+                                <td>2.13</td>
+                                <td>3.4</td>
+                            </tr>
+                            <tr>
+                                <td>Q-Instruct*</td>
+                                <td>0.97</td>
+                                <td>0.76</td>
+                                <td>1.95</td>
+                                <td><span style="color:blue;">3.68</span></td>
+                                <td>0.58</td>
+                                <td>0.93</td>
+                                <td>1.98</td>
+                                <td><span style="color:blue;">3.49</span></td>
+                            </tr>
+                            <tr class="our-method-row" style="border-bottom: 1px dashed #ccc;">
+                                <td><strong>ViDA-UGC</strong>†</td>
+                                <td>1.07</td>
+                                <td>0.74</td>
+                                <td>1.99</td>
+                                <td><strong>3.80</strong></td>
+                                <td>1.33</td>
+                                <td>1.14</td>
+                                <td>2.89</td>
+                                <td><strong>5.36</strong></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4">Qwen2-VL-7B</td>
+                                <td><em>no</em> (Baseline)*</td>
+                                <td>1.30</td>
+                                <td>1.06</td>
+                                <td>2</td>
+                                <td>4.36</td>
+                                <td>0.70</td>
+                                <td>0.73</td>
+                                <td>2.78</td>
+                                <td>4.21</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td><em>no</em> (Baseline)†</td>
+                                <td>1.36</td>
+                                <td>1.28</td>
+                                <td>2</td>
+                                <td><span style="color:blue;">4.64</span></td>
+                                <td>0.74</td>
+                                <td>0.92</td>
+                                <td>2.88</td>
+                                <td><span style="color:blue;">4.54</span></td>
+                            </tr>
+                            <tr>
+                                <td>Q-Instruct*</td>
+                                <td>1.15</td>
+                                <td>1.35</td>
+                                <td>2</td>
+                                <td>4.50</td>
+                                <td>0.69</td>
+                                <td>1.14</td>
+                                <td>1.78</td>
+                                <td>3.61</td>
+                            </tr>
+                            <tr class="our-method-row" style="border-bottom: 1px dashed #ccc;">
+                                <td><strong>ViDA-UGC</strong>†</td>
+                                <td>1.40</td>
+                                <td>1.30</td>
+                                <td>2</td>
+                                <td><strong>4.70</strong></td>
+                                <td>1.49</td>
+                                <td>1.34</td>
+                                <td>2.95</td>
+                                <td><strong>5.78</strong></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4">InternVL2.5-8B</td>
+                                <td><em>no</em> (Baseline)*</td>
+                                <td>0.96</td>
+                                <td>0.72</td>
+                                <td>1.83</td>
+                                <td>3.51</td>
+                                <td>0.74</td>
+                                <td>0.74</td>
+                                <td>2.76</td>
+                                <td>4.24</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td><em>no</em> (Baseline)†</td>
+                                <td>1.15</td>
+                                <td>1.03</td>
+                                <td>1.94</td>
+                                <td><span style="color:blue;">4.12</span></td>
+                                <td>0.75</td>
+                                <td>1.25</td>
+                                <td>2.90</td>
+                                <td><span style="color:blue;">4.9</span></td>
+                            </tr>
+                            <tr>
+                                <td>Q-Instruct*</td>
+                                <td>0.97</td>
+                                <td>1.22</td>
+                                <td>1.93</td>
+                                <td><span style="color:blue;">4.12</span></td>
+                                <td>0.63</td>
+                                <td>1.28</td>
+                                <td>1.63</td>
+                                <td>3.54</td>
+                            </tr>
+                            <tr class="our-method-row" style="border-bottom: 1px dashed #ccc;">
+                                <td><strong>ViDA-UGC</strong>†</td>
+                                <td>1.22</td>
+                                <td>1.23</td>
+                                <td>1.99</td>
+                                <td><strong>4.44</strong></td>
+                                <td>1.46</td>
+                                <td>1.32</td>
+                                <td>2.94</td>
+                                <td><strong>5.72</strong></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4">InternVL3-8B</td>
+                                <td><em>no</em> (Baseline)*</td>
+                                <td>1.10</td>
+                                <td>0.93</td>
+                                <td>1.86</td>
+                                <td>3.89</td>
+                                <td>0.93</td>
+                                <td>0.96</td>
+                                <td>2.95</td>
+                                <td>4.84</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td><em>no</em> (Baseline)†</td>
+                                <td>1.27</td>
+                                <td>1.34</td>
+                                <td>2</td>
+                                <td><span style="color:blue;">4.61</span></td>
+                                <td>0.96</td>
+                                <td>1.28</td>
+                                <td>2.98</td>
+                                <td><span style="color:blue;">5.22</span></td>
+                            </tr>
+                            <tr>
+                                <td>Q-Instruct*</td>
+                                <td>0.98</td>
+                                <td>1.32</td>
+                                <td>1.95</td>
+                                <td>4.25</td>
+                                <td>0.64</td>
+                                <td>1.25</td>
+                                <td>1.63</td>
+                                <td>3.52</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td><strong>ViDA-UGC</strong>†</td>
+                                <td>1.34</td>
+                                <td>1.35</td>
+                                <td>1.99</td>
+                                <td><strong>4.68</strong></td>
+                                <td>1.51</td>
+                                <td>1.36</td>
+                                <td>3</td>
+                                <td><strong>5.87</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-caption" style="text-align: left; margin-top: 1rem;">
+                    <p data-en="Comparison of the <strong>Quality Description</strong> ability between baseline MLLMs, Q-Instruct-<em>tuned</em> versions, and <strong>ViDA-UGC</strong>-<em>tuned</em> versions. For the training dataset with *, results are obtained under the prompt from Q-Instruct: <em>'Describe and evaluate the quality of the image. Think step by step.'</em>. For the datasets with †, results are obtained under our proposed CoT framework. For each baseline model, ViDA-UGC-tuned version achieves the highest score and our proposed CoT framewor achieves the second best score in both benchmarks." data-zh="对比基线多模态大语言模型（MLLMs）、经 Q-Instruct 微调的版本，以及经 ViDA-UGC 微调的版本的质量描述能力：对于带*的训练数据集，其结果是在 Q-Instruct 的提示下获得的，提示语为：“Describe and evaluate the quality of the image. Think step by step.”对于带†的数据集，其结果是在我们提出的思维链（CoT）框架下获得的。对于每个基线模型，经 ViDA-UGC 微调的版本在两个基准中均取得最高得分，而我们提出的 CoT 框架则取得次高得分。">Comparison of the <strong>Quality Description</strong> ability between baseline MLLMs, Q-Instruct-<em>tuned</em> versions, and <strong>ViDA-UGC</strong>-<em>tuned</em> versions. For the training dataset with *, results are obtained under the prompt from Q-Instruct: <em>'Describe and evaluate the quality of the image. Think step by step.'</em>. For the datasets with †, results are obtained under our proposed CoT framework. For each baseline model, ViDA-UGC-tuned version achieves the highest score and our proposed CoT framewor achieves the second best score in both benchmarks.</span>.</p>
+                </div>
+            </div>
+            <!-- Grounding Table -->
+            <div class="data-table-container">
+                <h3 style="text-align:center;margin:2rem 0 1rem 0;" data-en="Performance on quality grounding ability" data-zh="退化定位性能对比">Performance on quality grounding ability</h3>
+                <div class="table-wrapper" style="overflow-x:auto;">
+                    <table class="data-table performance-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Method</th>
+                                <th colspan="3">Referring Grounding</th>
+                                <th>Distortion Grounding</th>
+                                <th>Region Perception</th>
+                            </tr>
+                            <tr>
+                                <th>Response Rate</th>
+                                <th>Acc<sub>0.5</sub></th>
+                                <th>mIoU</th>
+                                <th>COCO mAP</th>
+                                <th>COCO mAP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Qwen-VL-Chat</td>
+                                <td>1</td>
+                                <td>32.4</td>
+                                <td>37.3</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr class="our-method-row" style="border-bottom: 1px dashed #ccc;">
+                                <td>Qwen-VL-Chat-ViDA</td>
+                                <td>1</td>
+                                <td><strong>41.3<sub>(+8.9)</sub></strong></td>
+                                <td><strong>43.4<sub>(+6.1)</sub></strong></td>
+                                <td>16.8</td>
+                                <td>27.1</td>
+                            </tr>
+                            <tr>
+                                <td>Qwen2-VL-7B</td>
+                                <td>0.79</td>
+                                <td>24.9</td>
+                                <td>29.8</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr class="our-method-row" style="border-bottom: 1px dashed #ccc;">
+                                <td>Qwen2-VL-7B-ViDA</td>
+                                <td>0.99</td>
+                                <td><strong>42.1<sub>(+17.2)</sub></strong></td>
+                                <td><strong>45.2<sub><span style="color:red;">(+15.4)</span></sub></strong></td>
+                                <td>17.7</td>
+                                <td>29.4</td>
+                            </tr>
+                            <tr>
+                                <td>InternVL2.5-8B</td>
+                                <td>0.98</td>
+                                <td>29.0</td>
+                                <td>37.0</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr class="our-method-row" style="border-bottom: 1px dashed #ccc;">
+                                <td>InternVL2.5-8B-ViDA</td>
+                                <td>1</td>
+                                <td><strong>43.3<sub>(+14.3)</sub></strong></td>
+                                <td><strong>46.4<sub>(+9.4)</sub></strong></td>
+                                <td>20.0</td>
+                                <td>32.3</td>
+                            </tr>
+                            <tr>
+                                <td>InternVL3-8B</td>
+                                <td>0.95</td>
+                                <td>25.8</td>
+                                <td>33.5</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr class="our-method-row">
+                                <td>InternVL3-8B-ViDA</td>
+                                <td>1</td>
+                                <td><strong>44.2<sub><span style="color:red;">(+18.4)</span></sub></strong></td>
+                                <td><strong>47.0<sub>(+13.5)</sub></strong></td>
+                                <td>19.7</td>
+                                <td>30.4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-caption" style="text-align: left; margin-top: 1rem;">
+                    <p data-en="Comparison of the Referring Grounding, Distortion Grounding, and Region Perception abilities between baselines and ViDA-UGC-tuned versions." data-zh="基线模型与ViDA-UGC调优版本在引用定位、退化定位和区域感知能力上的对比。">Comparison of the <strong>Referring Grounding, Distortion Grounding, and Region Perception</strong> abilities between baselines and <strong>ViDA-UGC</strong>-<em>tuned</em> versions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Source Resources -->
+    <section class="code-section" id="code">
+        <div class="container scroll-target">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Open Source Resources" data-zh="开源资源">Open Source Resources</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="code-resources">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 data-en="GitHub Repository" data-zh="GitHub 代码库">GitHub Repository</h3>
+                        <p data-en="Complete implementation code and usage examples" data-zh="完整的实现代码和使用示例">Complete implementation code and usage examples</p>
+                        <a href="https://github.com/DYEvaLab/ViDA-MIPI-code" target="_blank" class="resource-btn">
+                            <span data-en="Visit GitHub" data-zh="访问 GitHub">Visit GitHub</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 data-en="Datasets" data-zh="数据集">Datasets</h3>
+                        <p data-en="Download links for training and evaluation datasets" data-zh="训练和评估使用的数据集下载链接">Download links for training and evaluation datasets</p>
+                        <a href="https://huggingface.co/datasets/DY-Evalab/ViDA-MIPI-dataset" target="_blank" class="resource-btn">
+                            <span data-en="Download Data" data-zh="下载数据">Download Data</span>
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="resource-card" style="text-align: center;">
+                    <div class="resource-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3 data-en="Pre-trained Models" data-zh="预训练模型">Pre-trained Models</h3>
+                        <p data-en="ViDA-UGC-tuned model checkpoint and backbone" data-zh="ViDA-UGC微调模型检查点和骨干网络" style="text-align: center;">ViDA-UGC-tuned model checkpoint and backbone</p>
+                        <a href="https://huggingface.co/DY-Evalab/Qwen2-VL-ViDA" target="_blank" class="resource-btn">
+                            <span data-en="Download Models" data-zh="下载模型">Download Models</span>
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact部分 -->
+    <section class="contact-section" id="contact">
+        <div class="container scroll-target">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Contact" data-zh="联系我们">Contact</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="contact-content">
+                <p class="contact-text" style="font-size: 1.5rem;" data-en="Feel free to contact us at:" 
+                   data-zh="欢迎联系我们：">
+                    Feel free to contact us at:
+                </p>
+                <p class="contact-text" style="font-size: 1.5rem;">
+                    jasonliao.21@bytedance.com
+                </p>
+                <p class="contact-text" style="font-size: 1.5rem;">
+                    fanhaotian@bytedance.com
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Acknowledgement部分 -->
+    <section class="acknowledgement-section" id="acknowledgement">
+        <div class="container scroll-target">
+            <div class="section-header">
+                <h2 class="section-title" data-en="Acknowledgement" data-zh="致谢">Acknowledgement</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="acknowledgement-content">
+                <p data-en="We are pleased to announce that we have successfully organized the Detailed Image Quality Assessment Challenge in MIPI 2025 using the ViDA-UGC dataset. For more information, please visit the challenge page (https://www.codabench.org/competitions/8156/#/pages-tab) and the official MIPI 2025 website (https://mipi-challenge.org/MIPI2025)." 
+                   data-zh="我们很高兴地宣布，已成功使用ViDA-UGC数据集举办MIPI 2025中的Detailed Image Quality Assessment Challenge。更多信息请访问挑战页面（https://www.codabench.org/competitions/8156/#/pages-tab）和MIPI 2025官方网站（https://mipi-challenge.org/MIPI2025）。">
+                    We are pleased to announce that we have successfully organized the Detailed Image Quality Assessment Challenge in MIPI 2025 using the ViDA-UGC dataset. For more information, please visit the challenge page (<a href="https://www.codabench.org/competitions/8156/#/pages-tab" target="_blank">https://www.codabench.org/competitions/8156/#/pages-tab</a>) and the official MIPI 2025 website (<a href="https://mipi-challenge.org/MIPI2025" target="_blank">https://mipi-challenge.org/MIPI2025</a>).
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- 页脚 -->
+    <!-- footer -->
+    <footer class="footer">
+    <div class="container">
+        <div class="content has-text-centered">
+        </div>
+        <div class="columns is-centered">
+        <div class="column is-8">
+            <div class="content">
+            <p>
+                This website is licensed under a <a rel="license"
+                                                    href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p>
+                Website source code based on the <a href="https://fjc2005.github.io/detectanyllm/">DetectAnyLLM</a> project page. If you want to reuse their <a
+                href="https://github.com/fjc2005/fjc2005.github.io/tree/master/detectanyllm">source code</a>, please credit them appropriately.
+            </p>
+            </div>
+        </div>
+        </div>
+    </div>
+    </footer>
+    <!-- footer -->
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>
