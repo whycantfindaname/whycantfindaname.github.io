@@ -54,10 +54,6 @@ function setupEventListeners() {
     });
     
     // Button click handlers
-    document.getElementById('paper-btn').addEventListener('click', () => {
-        window.open('DetectAnyLLM_src_tex/main.pdf', '_blank');
-    });
-
     document.getElementById('arxiv-btn').addEventListener('click', () => {
         window.open('https://arxiv.org/abs/2508.12605', '_blank');
     });
