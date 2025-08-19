@@ -59,7 +59,7 @@ function setupEventListeners() {
     });
 
     document.getElementById('arxiv-btn').addEventListener('click', () => {
-        window.open('https://arxiv.org/abs/2407.12220', '_blank');
+        window.open('https://arxiv.org/abs/2508.12605', '_blank');
     });
 
     document.getElementById('code-btn').addEventListener('click', () => {
