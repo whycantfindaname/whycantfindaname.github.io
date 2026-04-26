@@ -2418,6 +2418,11 @@ body {
     border-bottom: 1px solid #212529;
 }
 
+#comparison .data-table th,
+#comparison .data-table td {
+    text-align: center !important;
+}
+
 
 /* ---------- Row zebra striping & hover ---------- */
 .data-coverage-section .data-table tbody tr:nth-child(odd) {
