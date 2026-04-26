@@ -18,6 +18,11 @@ package-lock.json
 
 # Ignore folders related to IDEs
 .vscode/
+.claude
 
 # Ignore files created by MacOS
 .DS_Store
+
+# Coding Agents
+CLAUDE.md
+.playwright-mcp

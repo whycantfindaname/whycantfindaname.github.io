@@ -2367,11 +2367,11 @@ body {
 }
 
 .data-coverage-section .data-table th {
-    text-align: left;
+    text-align: center;
     padding: 0.8rem 0.5rem;
     font-size: 0.85rem;
     letter-spacing: normal;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: none;
     white-space: nowrap;
     font-weight: 700;
     color: #212529;
@@ -2385,12 +2385,37 @@ body {
 .data-coverage-section .data-table td {
     padding: 0.6rem 0.5rem;
     font-size: 0.8rem;
-    text-align: left;
+    text-align: center;
     color: #495057;
 }
 
-.data-coverage-section .data-table td:first-child {
-    text-align: left;
+.data-coverage-section .data-table th[rowspan],
+.data-coverage-section .data-table td:first-child,
+.data-coverage-section .data-table td:nth-child(2) {
+    text-align: center;
+}
+
+.data-coverage-section .data-table thead tr:first-child th[colspan] {
+    position: relative;
+    padding-bottom: 0.95rem;
+}
+
+.data-coverage-section .data-table thead tr:first-child th[colspan]::after {
+    content: '';
+    position: absolute;
+    left: 0.35rem;
+    right: 0.35rem;
+    bottom: 0.25rem;
+    border-bottom: 1px solid #212529;
+}
+
+.data-coverage-section .data-table thead tr:last-child th {
+    font-style: italic;
+    border-bottom: 1px solid #212529;
+}
+
+.data-coverage-section .data-table thead tr:first-child th[rowspan] {
+    border-bottom: 1px solid #212529;
 }
 
 

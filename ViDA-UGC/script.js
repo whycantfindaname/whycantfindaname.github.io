@@ -476,14 +476,6 @@ function optimizePerformance() {
     });
     
     images.forEach(img => imageObserver.observe(img));
-    
-    // 防抖滚动事件
-    let scrollTimeout;
-    const originalScrollHandler = handleScroll;
-    handleScroll = function() {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(originalScrollHandler, 16); // 60fps
-    };
 }
 
 // 初始化性能优化
