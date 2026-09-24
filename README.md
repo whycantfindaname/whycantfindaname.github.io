@@ -1,19 +1,17 @@
-# 🧑‍🚀 Personal Homepage Template [[Preview](https://w-r-s.github.io/academic-homepage-template/)]
+# Wenjie Liao's Homepage
 
-This repository is a reusable academic and personal homepage template. The visible profile belongs to a fictional person; names, affiliations, projects, publications, awards, and contact details are sample content only.
+Personal academic homepage, served at https://whycantfindaname.github.io/.
+Built on [w-r-s/academic-homepage-template](https://github.com/w-r-s/academic-homepage-template).
 
-Start locally with:
+Preview locally:
 
 ```bash
 python3 -m http.server 8080 --bind 127.0.0.1
 ```
 
-Before publishing, replace the sample identity and links in `index.html` and the placeholder assets in `images/template/`.
+## Privacy
 
-This homepage benefits from many projects and tools, including but not limited to:
-
-- Claude Code with Opus 4.6
-- CodeX with GPT-5.5
-- Audio-Interaction: https://xzf-thu.github.io/Audio-Interaction/
-
-> Keep the layout, customize the content, and make it yours.
+Do not publish private information on this site: no phone number, home address,
+ID numbers, or personal messaging accounts. Only the university email and public
+academic profiles (Google Scholar, GitHub, OpenReview) are shown. Strip metadata
+from photos and do not upload resume PDFs that contain a phone number.
